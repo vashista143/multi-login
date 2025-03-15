@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .reset-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 70%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .message {
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .success {
+            color: green;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="reset-container">
+        <h2>Reset Password</h2>
+        <form id="resetForm">
+            <input type="email" id="emailInput" name="mailid" placeholder="Enter Email Address" required>
+            <button type="submit" id="submt">Reset</button>
+            <p id="successMessage" class="message success">Reset mail has been sent successfully</p>
+            <p id="errorMessage" class="message error">Enter a valid email</p>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("resetForm").addEventListener("submit", async function(event) {
+            event.preventDefault(); // Prevent default form submission
+            
+            const email = document.getElementById("emailInput").value;
+            const successMessage = document.getElementById("successMessage");
+            const errorMessage = document.getElementById("errorMessage");
+
+            // Hide messages before sending a request
+            successMessage.style.display = "none";
+            errorMessage.style.display = "none";
+
+            try {
+                const response = await fetch("/reset", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ mailid: email })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    successMessage.textContent = result.message;
+                    successMessage.style.display = "block";
+                } else {
+                    errorMessage.textContent = result.message;
+                    errorMessage.style.display = "block";
+                }
+            } catch (error) {
+                errorMessage.textContent = "Failed to send reset request";
+                errorMessage.style.display = "block";
+            }
+        });
+    </script>
+
+</body>
+</html>
