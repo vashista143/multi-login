@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .register-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center; 
+            gap: 5px;
+            font-size: 14px;
+        }
+        button {
+            width: 70%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .login-link {
+            display: block;
+            margin-top: 10px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .login-link:hover {
+            text-decoration: underline;
+        }
+        .check{
+        transform: translateX(-100px);
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <h2>Register</h2>
+        <form method="post" action="/register">
+            <input type="text" name="username" placeholder="Enter Username" required>
+            <input type="email" name="email" placeholder="Enter Email Address" required>
+            <input type="password" name="password" placeholder="Enter Password" required>
+            <input type="password" name="confirmPassword" placeholder="Confirm Password" required>
+
+            <div class="checkbox-container">
+                <input type="checkbox" name="isAdmin"  id="isAdmin">
+                <label class="check"  for="isAdmin">Grant Admin Permissions</label>
+            </div>
+
+            <button type="submit">Register</button>
+        </form>
+        <a href="/" class="login-link">Already have an account? Login</a>
+    </div>
+    <script>
+        document.querySelector("form").addEventListener("submit", function(event) {
+            const isAdminCheckbox = document.getElementById("isAdmin");
+            isAdminCheckbox.value = isAdminCheckbox.checked ? "true" : "false";
+        });
+    </script>    
+</body>
+</html>
